@@ -2,14 +2,25 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/7/23.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class JedisTestStringCase {
+
+
+    @Autowired
+    private JedisPool jedisPool;
 
 
     private Jedis jedis = null;
@@ -18,8 +29,11 @@ public class JedisTestStringCase {
 //    开始之前运行ip，结束后运行close。这样后面的就不用重复写了
     @Before
     public void before() {
-        jedis = new Jedis("192.168.107.128");//里面写ip地址
+//        jedis = new Jedis("192.168.107.128");//里面写ip地址，不这样的话也可以调用连接池的
+        jedis=jedisPool.getResource();
     }
+
+
     @After
     public void after() {
         if(jedis!=null){

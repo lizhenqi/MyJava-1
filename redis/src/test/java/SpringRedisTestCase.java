@@ -15,14 +15,14 @@ public class SpringRedisTestCase {
 
 //  @Autowired是Spring自带的注入，功能和Inject一样
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String,String> redisTemplate;
 
     @Test
     public void testSet(){
         //注意和java中的区别
-        ValueOperations valueOperations=redisTemplate.opsForValue();
+        ValueOperations<String,String> valueOperations=redisTemplate.opsForValue();
         valueOperations.set("user:name","成龙");
-        System.out.println("测试");
+//        System.out.println("测试");
     }
 
     @Test
@@ -30,11 +30,13 @@ public class SpringRedisTestCase {
         System.out.println(redisTemplate.opsForValue().get("user:name"));
     }
 
-//    @Test
-//    public void testIncr(){
-//        redisTemplate.opsForValue().increment("user:num",1);
-////        increment这个就包括整型和浮点
-//        System.out.println(redisTemplate.opsForValue().get("user:num"));
-//    }
+
+//    用下面的要求要把键值都序列化（在applicationContext.xml中配置）
+    @Test
+    public void testIncr(){
+        redisTemplate.opsForValue().increment("user:num",1);
+//        increment这个就包括整型和浮点
+        System.out.println(redisTemplate.opsForValue().get("user:num"));
+    }
 
 }

@@ -1,19 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <context:component-scan base-package="com.kaishengit"/>
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <!--<property name=""这个不提示说明没有set方法,JedisPool里面的东西都在构造方法里-->
+        <!--故应该配置构造方法-->
+        <constructor-arg name="host" value="192.168.107.128"/>
+        <constructor-arg name="port" value="6379"/>
+        <constructor-arg name="poolConfig" ref="poolConfig"/>
+    </bean>
+
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="minIdle" value="2"/>
+        <property name="maxTotal" value="5"/>
+        <property name="maxWaitMillis" value="10000"/>
+    </bean>
+
+
+    <!--下面的是Spring-data-redis的配置-->
 
     <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
         <!--要想远程连接需要把redis里面的/etc/redis/redis.conf里面的：bind 127.0.0.1注释掉，否则只能本机连接-->
         <property name="hostName" value="192.168.107.128"/>
         <property name="port" value="6379"/>
         <property name="usePool" value="true"/>
+        <!--连接池要有配置poolConfig如上-->
+        <property name="poolConfig" ref="poolConfig"/>
     </bean>
 
-    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+    <!--Spring提供的解决字符串的类-->
+    <bean class="org.springframework.data.redis.core.StringRedisTemplate">
         <property name="connectionFactory" ref="jedisConnectionFactory"/>
     </bean>
 
+
+    <!--因为上面Spring提供的解决字符串的类故这下面的都可以不用了-->
+    <!--序列化-->
+    <bean id="serializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>
+
+        <!--Spring用redis时候要求键值都要序列化(假如不在这里序列化就要在操作之前进行序列化如：JsonTestCase里面的)-->
+        <!--<property name="keySerializer"  ref="serializer"/>-->
+        <!--<property name="valueSerializer" ref="serializer"/>-->
+    </bean>
 
 
 </beans>
