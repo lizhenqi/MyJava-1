@@ -93,7 +93,7 @@ public class HibernateTestCase {
         Session session=HibernateUtil.getSession();
         Transaction transaction=session.beginTransaction();
 
-        String hql="from User";//是pojo中的对象，不是数据库的表。
+        String hql="from User";//是数据库对应的pojo中的对象，不是数据库的表。
         Query query=session.createQuery(hql);
         List<User> userList=query.list();
         for(User user:userList){
