@@ -1,0 +1,31 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.kaishengit.pojo">
+
+    <!--实体类pojo和table（数据库表）的对应关系-->
+    <class name="Dept" table="t_dept">
+        <id name="id" column="id">
+            <!--主键生成测力：native表示主键自动增长-->
+            <generator class="native"/>
+        </id>
+        <property name="deptname" column="deptname"/>
+        <!--如果实体类pojo的属性名和column的属性名一样。则cloumn可省略不写。-->
+
+
+        <!--
+            one-to-many的配置
+            key column写的是many的外键
+            class写的是many的对象
+            inverse="true" 表示当前对象放弃关系维护
+            cascade="delete" 级联删除（删除dept时候自动删除关联的employee）
+        -->
+        <set name="employeeSet" inverse="true" cascade="delete">
+            <key column="deptid"/>
+            <one-to-many class="Employee"/>
+        </set>
+
+
+    </class>
+
+</hibernate-mapping>

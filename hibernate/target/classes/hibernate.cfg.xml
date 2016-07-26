@@ -6,7 +6,7 @@
 
         <!--数据库连接(一下所有配置文件从官网下载的hibernate->project->etc->hibernate.properties里面找)-->
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql:///lizhenqi</property>
+        <property name="hibernate.connection.url">jdbc:mysql:///mydb</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">root</property>
 
@@ -27,8 +27,12 @@
         <property name="show_sql">true</property>
         <property name="current_session_context_class">thread</property>
 
-        <!--添加映射文件-->
+        <!--（只要添加了对象映射就得加进来）添加映射文件-->
         <mapping resource="hbm/User.hbm.xml"/>
+        <mapping resource="hbm/Dept.hbm.xml"/>
+        <mapping resource="hbm/Employee.hbm.xml"/>
+        <mapping resource="hbm/Card.hbm.xml"/>
+        <mapping resource="hbm/Person.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>

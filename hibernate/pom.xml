@@ -37,12 +37,12 @@
       <version>0.9.5.2</version>
     </dependency>
 
-    <!--日志-->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>1.7.5</version>
-    </dependency>
+    <!--&lt;!&ndash;日志&ndash;&gt;-->
+    <!--<dependency>-->
+      <!--<groupId>org.slf4j</groupId>-->
+      <!--<artifactId>slf4j-log4j12</artifactId>-->
+      <!--<version>1.7.5</version>-->
+    <!--</dependency>-->
 
 
 
