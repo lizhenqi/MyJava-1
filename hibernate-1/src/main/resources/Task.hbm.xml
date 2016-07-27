@@ -1,0 +1,19 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.kaishengit.pojo">
+
+
+    <class name="Task" table="t_task">
+        <!--二级缓存要可读写-->
+        <cache usage="read-write"/>
+
+        <id name="id">
+            <!--主键的生成策略为：UUID-->
+            <generator class="uuid"/>
+        </id>
+        <property name="title"/>
+        <version name="version"/>
+
+    </class>
+</hibernate-mapping>

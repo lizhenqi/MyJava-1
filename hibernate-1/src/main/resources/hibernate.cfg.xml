@@ -1,0 +1,52 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <!--数据库连接(一下所有配置文件从官网下载的hibernate->project->etc->hibernate.properties里面找)-->
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql:///mydb</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">root</property>
+
+        <!--方言(针对于不同的数据库有不同的方言就像一个翻译机：也从上面的地址找)-->
+        <!--注意这个不要配置错了是它MySQLDialect，不是别的-->
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!--c3p0数据库连接池（也从上面的地址找）-->
+        <property name="c3p0.min_size">2</property>
+        <property name="c3p0.max_size">6</property>
+        <property name="c3p0.timeout">5000</property>
+        <property name="c3p0.max_statements">100</property>
+        <property name="c3p0.idle_test_period">3000</property>
+        <property name="c3p0.acquire_increment">2</property>
+        <property name="c3p0.validate">false</property>
+
+        <!--其他配置-->
+        <property name="show_sql">true</property>
+        <property name="current_session_context_class">thread</property>
+        
+        <!--二级缓存-->
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory </property>
+        <!--上面的不是参考etc，etc的完全限定名不对-->
+
+        <!--事务的隔离级别-->
+        <!--<property name="connection.isolation">4</property>-->
+        
+        <!--（只要添加了对象映射就得加进来）添加映射文件-->
+        <mapping class="com.kaishengit.pojo.User"/>
+        <mapping class="com.kaishengit.pojo.Dept"/>
+        <mapping class="com.kaishengit.pojo.Employee"/>
+        <mapping class="com.kaishengit.pojo.Student"/>
+        <mapping class="com.kaishengit.pojo.Teacher"/>
+        <mapping class="com.kaishengit.pojo.Topic"/>
+        <mapping class="com.kaishengit.pojo.TopicContent"/>
+        <mapping class="com.kaishengit.pojo.Card"/>
+        <mapping class="com.kaishengit.pojo.Person"/>
+        <mapping class="com.kaishengit.pojo.Task"/>
+
+
+    </session-factory>
+</hibernate-configuration>
