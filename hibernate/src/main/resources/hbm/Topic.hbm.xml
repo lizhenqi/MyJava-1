@@ -14,7 +14,7 @@
 
 
         <!--这个配置的是传进来的topicContent-->
-        <many-to-one name="topicContent" column="contentid" class="TopicContent" unique="true"/>
+        <many-to-one name="topicContent" column="contentid" class="TopicContent" unique="true" lazy="false"/>
 
     </class>
 

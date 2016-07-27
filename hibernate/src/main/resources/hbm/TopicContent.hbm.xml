@@ -11,7 +11,7 @@
         </id>
         <property name="content" column="content"/>
         <!--如果实体类pojo的属性名和column的属性名一样。则cloumn可省略不写。-->
-<many-to-one name="topic" column="topicid" class="Topic" unique="true"/>
+     <many-to-one name="topic" column="topicid" class="Topic" unique="true"/>
 
 
     </class>

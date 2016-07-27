@@ -12,11 +12,23 @@
         <property name="teaname" column="teaname"/>
         <!--如果实体类pojo的属性名和column的属性名一样。则cloumn可省略不写。-->
 
+
+        <!--
+             Many to Many的配置
+
+             name="studentSet" 指的是本对象的那个集合
+             table="t_student_teacher" 指的是关系表
+             key column="teaid" 指的是本对象在关系表的外键
+
+             many-to-many column="stuid" class="Student" 指的是对方的外键和对象
+
+             set 节点中的 order-by 是指关系表
+             many-to-many 节点中的 order-by 是指student表
+       -->
         <set name="studentSet" table="t_student_teacher" >
             <key column="teaid"/>
             <many-to-many column="stuid" class="Student" order-by="id desc"/>
         </set>
-
 
 
     </class>
