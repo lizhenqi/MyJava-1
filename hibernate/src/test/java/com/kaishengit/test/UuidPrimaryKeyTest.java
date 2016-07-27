@@ -45,7 +45,6 @@ public class UuidPrimaryKeyTest {
         Task task2= (Task) session.get(Task.class,"40288195562ad4fc01562ad4ff000000");
         System.out.println(task2.getTitle());//上面已经查询过了有缓存了，现在只会有一句sql查询 。
 
-
         transaction.commit();
     }
 
