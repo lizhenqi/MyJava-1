@@ -96,6 +96,7 @@ public class BaseDao<T,PK extends Serializable> {
         Page<T> page=new Page<>(pageSize,totalSize,pageNo);
 
         Criteria criteria=getSession().createCriteria(entityClass);
+
         criteria.setFirstResult(page.getStart());
         criteria.setMaxResults(page.getSize());
 
@@ -124,10 +125,11 @@ public class BaseDao<T,PK extends Serializable> {
         Criteria criteria = buildCriteriaBySearchParam(searchParamList);
 
         Integer totalSize = count(criteria).intValue();
+        Page<T> page = new Page<>(pageSize,totalSize,pageNo);
 
-        Page<T> page = new Page<>(pageNo,pageSize,totalSize);
         criteria.setFirstResult(page.getStart());
         criteria.setMaxResults(page.getSize());
+
 
         List<T> result = criteria.list();
         page.setItems(result);
@@ -139,6 +141,7 @@ public class BaseDao<T,PK extends Serializable> {
 
     private Criteria buildCriteriaBySearchParam(List<SearchParam> searchParamList) {
         Criteria criteria = getSession().createCriteria(entityClass);
+        criteria.addOrder(Order.desc("id"));
 
         for(SearchParam searchParam : searchParamList) {
             String propertyName = searchParam.getPropertyName();

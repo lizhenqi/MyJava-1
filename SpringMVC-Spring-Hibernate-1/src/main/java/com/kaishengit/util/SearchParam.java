@@ -21,7 +21,7 @@ public class SearchParam {
     public static List<SearchParam> buildSearchParam(HttpServletRequest request){
 
         List<SearchParam> searchParamList = Lists.newArrayList();
-//1.获取所有查询字符串
+//1.用于获取所有查询字符串
         Enumeration<String> enumeration= request.getParameterNames();
 
         while (enumeration.hasMoreElements()){
@@ -73,7 +73,5 @@ public class SearchParam {
     public void setValue(Object value) {
         this.value = value;
     }
-
-
-
+    
 }
