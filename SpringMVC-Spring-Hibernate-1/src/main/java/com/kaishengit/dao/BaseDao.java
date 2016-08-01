@@ -1,17 +1,11 @@
 package com.kaishengit.dao;
 
-import com.kaishengit.pojo.Book;
-import com.kaishengit.pojo.BookType;
-import com.kaishengit.pojo.Publisher;
 import com.kaishengit.util.Page;
 import com.kaishengit.util.SearchParam;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.hibernate.transform.ResultTransformer;
 
 import javax.inject.Inject;
@@ -123,6 +117,7 @@ public class BaseDao<T,PK extends Serializable> {
 
     public Page<T> findByPageNo(Integer pageNo, Integer pageSize, List<SearchParam> searchParamList) {
         Criteria criteria = buildCriteriaBySearchParam(searchParamList);
+        criteria.addOrder(Order.desc("id"));
 
         Integer totalSize = count(criteria).intValue();
         Page<T> page = new Page<>(pageSize,totalSize,pageNo);
@@ -141,33 +136,44 @@ public class BaseDao<T,PK extends Serializable> {
 
     private Criteria buildCriteriaBySearchParam(List<SearchParam> searchParamList) {
         Criteria criteria = getSession().createCriteria(entityClass);
-        criteria.addOrder(Order.desc("id"));
 
         for(SearchParam searchParam : searchParamList) {
             String propertyName = searchParam.getPropertyName();
             Object value = searchParam.getValue();
             String type = searchParam.getType();
+            if(propertyName.contains("_or_")){
+                String [] arry=propertyName.split("_or_");
 
-            if("eq".equalsIgnoreCase(type)) {
-                criteria.add(Restrictions.eq(propertyName,value));
-            } else if("like".equalsIgnoreCase(type)) {
-                criteria.add(Restrictions.like(propertyName,value.toString(), MatchMode.ANYWHERE));
-            } else if("ge".equalsIgnoreCase(type)) {
-                criteria.add(Restrictions.ge(propertyName,value));
-            } else if("gt".equalsIgnoreCase(type)) {
-                criteria.add(Restrictions.gt(propertyName,value));
-            } else if("le".equalsIgnoreCase(type)) {
-                criteria.add(Restrictions.le(propertyName,value));
-            } else if("lt".equalsIgnoreCase(type)) {
-                criteria.add(Restrictions.lt(propertyName,value));
+                for(String msg:arry){
+
+                }
+
             }
+
+            Criterion criterion=buildCondition(propertyName, value, type);
+            criteria.add(criterion);
         }
 
         return criteria;
 
     }
 
-
+    private Criterion buildCondition(String propertyName, Object value, String type) {
+        if("eq".equalsIgnoreCase(type)) {
+            return  Restrictions.eq(propertyName,value);
+        } else if("like".equalsIgnoreCase(type)) {
+            return Restrictions.like(propertyName,value.toString(), MatchMode.ANYWHERE);
+        } else if("ge".equalsIgnoreCase(type)) {
+            return Restrictions.ge(propertyName,value);
+        } else if("gt".equalsIgnoreCase(type)) {
+            return Restrictions.gt(propertyName,value);
+        } else if("le".equalsIgnoreCase(type)) {
+            return Restrictions.le(propertyName,value);
+        } else if("lt".equalsIgnoreCase(type)) {
+            return Restrictions.lt(propertyName,value);
+        }
+        return null;
+    }
 
 
 }

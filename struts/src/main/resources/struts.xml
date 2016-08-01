@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <!--每配置里面可以写多个package，每个package可以写多个action，每个action就是一个路径（互不影响）-->
+
+    <!--必须继承：extends="struts-default"-->
+    <package name="myPackage" extends="struts-default">
+        <!--name:url中请求的名字(默认也可以通过加后缀.action访问)；class：Action类的完全限定名-->
+        
+        <action name="home" class="com.kaishengit.action.HomeAction">
+
+            <!--name:Action中方法的返回值;里面的type请求转发可以默认不写（根据返回值的name定义去的jsp界面）-->
+            <result name="success">/WEB-INF/views/home.jsp</result>
+            <!--<result name="true">/WEB-INF/views/error.jsp</result>-->
+        </action>
+
+    </package>
+    
+    
+    <!--为访问路径：添加前缀问题-->
+    <package name="useraPackage" namespace="/user" extends="struts-default">
+<!--extends的配置文件都在struts-default.xml中（不写没有效果）-->
+
+        <!--请求转发到JSP上（默认type="dispatcher"可以不写）-->
+        <action name="new" class="com.kaishengit.action.HomeAction" method="toSave">
+            <result name="success" type="dispatcher">/WEB-INF/views/user/save.jsp</result>
+        </action>
+
+
+        <!--重定向到Action-->
+        <action name="save" class="com.kaishengit.action.HomeAction" method="save">
+            <result name="success" type="redirectAction">
+                <!--重定向到Action的名字-->
+                <param name="actionName">list</param>
+                <!--前缀，因为有可能重名，需要指定哪的-->
+                <param name="namespace">/user</param>
+            </result>
+        </action>
+
+
+        <action name="list" class="com.kaishengit.action.HomeAction" method="list">
+            <result name="success">/WEB-INF/views/user/list.jsp</result>
+        </action>
+
+    </package>
+    
+</struts>

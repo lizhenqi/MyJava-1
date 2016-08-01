@@ -24,12 +24,12 @@
     <div class="well well-sm">
         <form method="get" class="form-inline">
             <div class="form-group">
-                <input type="text" placeholder="书籍名称" class="form-control" value="${bookname}" name="q_like_bookname">
+                <input type="text" placeholder="书籍或作者" class="form-control" value="${q_s_like_bookname_or_author}" name="q_s_like_bookname_or_author">
             </div>
             <div class="form-group">
 
-                <input type="text" placeholder="最低价格" class="form-control" name="q_ge_bookprice">
-                --<input type="text" placeholder="最高价格 " class="form-control" name="q_le_bookprice">
+                <input type="text" placeholder="最低价格" class="form-control" name="q_f_ge_bookprice" value="${q_f_ge_bookprice}">
+                --<input type="text" placeholder="最高价格 " class="form-control" name="q_f_le_bookprice" value="${q_f_le_bookprice}">
             </div>
             <%--<div class="form-group">--%>
                 <%--<select id="" class="form-control" name="type">--%>
@@ -113,9 +113,7 @@
             prev:"上一页",
             next:"下一页",
             last:"末页",
-            href:"?p={{number}}"
-            <%--"bookname="+encodeURIComponent('${bookname}')+"&type=${typeid}&pub=${pubid}&p={{number}}"--%>
-<%--//                注意上面的,encodeURIComponent('${bookname}')是针对中文的。--%>
+            href:"?p={{number}}&q_s_like_bookname=${q_s_like_bookname}&q_f_ge_bookprice=${q_f_ge_bookprice}&q_f_le_bookprice=${q_f_le_bookprice}"
         })
     });
 
