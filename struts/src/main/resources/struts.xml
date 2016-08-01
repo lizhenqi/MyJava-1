@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE struts PUBLIC
         "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
+<!--修改default.properties文件默认值-->
+     <!-- <constant name="struts.action.extension" value="do"/>-->
+
+
     <!--每配置里面可以写多个package，每个package可以写多个action，每个action就是一个路径（互不影响）-->
 
     <!--必须继承：extends="struts-default"-->
